@@ -12,8 +12,10 @@ db.once('open', ()=> console.log('connected to dataabase'))
 
 
 const pesoRouter = require("./routes/peso")
+const pedidoRouter = require("./routes/pedido")
 
 app.use("/peso", pesoRouter)
+app.use("/pedido", pedidoRouter)
 
 
 
