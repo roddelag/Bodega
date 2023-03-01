@@ -9,11 +9,14 @@ Content-Type: application/json
 }
 
 ###
-post http://localhost:3000/peso
+get http://localhost:3000/pedido/63fe8adc6f55159ba8ab1590
+###
+get http://localhost:3000/peso/63fe8adc6f55159ba8ab1590
+###
+post http://localhost:3000/peso/63fe8adc6f55159ba8ab1590
 Content-Type: application/json
 
 {
-    "id": "63fe8adc6f55159ba8ab1590",
-    "pesoI": "10",
-    "pesoF": "27"
+    "pesoI": "15",
+    "pesoF": "30"
 }

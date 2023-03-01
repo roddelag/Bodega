@@ -19,10 +19,10 @@ router.get("/:id", async (req, res) => {
 
 
 
-router.post("/", async (req, res) => {
+router.post("/:id", async (req, res) => {
     try{
-      const { id, pesoI, pesoF } = req.body;
-      const pedido = await Pedido.findById(id);
+      const { pesoI, pesoF } = req.body;
+      const pedido = await Pedido.findById(req.params.id);
       if (!pedido) {
         res.status(404).json({message: "Pedido no encontrado"});
         return;
