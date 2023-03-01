@@ -1,5 +1,4 @@
 
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 body {
@@ -22,8 +21,10 @@ body {
     color: aliceblue;
 }
 
-.header .home-button {
+.header .home-button a {
     font-weight: bold;
+    text-decoration: none;
+    color: aliceblue;
 }
 
 .header .menu img {
@@ -47,24 +48,31 @@ body {
     width: 100%;
     overflow: hidden;
 }
-
-.info p {
+.info {
     color: aliceblue;
+}
+
+.info .price {
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info div:nth-child(3) {
     font-size: 16px;
 }
 
-.order-button {
+.order-options {
     width: 85%;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
     justify-content: center;
 }
 
-.order-button a {
-    display: inline-block;
-    text-decoration: none;
-    color: aliceblue;
+.place-order {
+    color: white;
     background-color: blue;
-    padding: 16px;
+    padding: 12px;
 }
