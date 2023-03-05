@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Entrance Access</title>
+        <!-- Styles related to this HTML page -->
+        <link rel="stylesheet" href="./css/warehouseAccess.css">
+        <!-- Scripts related to this HTML page -->
+        <script src="https://unpkg.com/html5-qrcode"></script>
+    </head>
+    <body>
+
+        <main>
+            <div id="reader"></div>
+            <div id="result"></div>
+        </main>
+
+        <script>
+            function onScanSuccess(decodedText, decodedResult) {
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                document.getElementById("result").value = decodedResult;
+            }
+
+            setTimeout( () => {
+                let html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
+                    fps: 20, 
+                    qrbox: 250 
+                });
+
+                html5QrcodeScanner.render(onScanSuccess);
+            }, 10)
+
+        </script>
+
+    </body>
+</html>
