@@ -26,5 +26,8 @@ app.use("/pedido", pedidoRouter)
 app.get("/access", (req, res)=> {
     res.render("warehouseAccess.html");
 })
+app.get("/order", (req, res)=> {
+    res.render("make-order.html");
+})
 
 app.listen(3000, ()=> console.log('server started'))

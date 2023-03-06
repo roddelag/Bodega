@@ -76,3 +76,10 @@ body {
     background-color: blue;
     padding: 12px;
 }
+
+.qr-code {
+    max-width: 250px;
+    margin: 10px;
+}
+
+
