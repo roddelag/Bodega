@@ -2,7 +2,7 @@ post http://localhost:3000/pedido
 Content-Type: application/json
 
 {
-    "email": "epiclash99@gmail.com",
+    "email": "epiclash99@kjgkjh.com",
     "cantidad": "2",
     "precio": "10",
     "peso": "15"
@@ -11,7 +11,7 @@ Content-Type: application/json
 ###
 get http://localhost:3000/pedido/63fe8adc6f55159ba8ab1590
 ###
-get http://localhost:3000/peso/63fe8adc6f55159ba8ab1590
+get http://localhost:3000/peso/63fe8adc6f55159ba877ab1590
 ###
 post http://localhost:3000/peso/63fe8adc6f55159ba8ab1590
 Content-Type: application/json

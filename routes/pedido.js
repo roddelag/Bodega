@@ -27,9 +27,9 @@ router.get("/:id", async (req, res) => {
             res.status(404).json({message: "Pedido no encontrado"});
             return;
         }
-        res.json(pedido);
+        res.json("TRUE");
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json("FALSE");
     }
 })
 
