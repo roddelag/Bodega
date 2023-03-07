@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-get http://localhost:3000/pedido/63fe8adc6f55159ba8ab1590
+get http://localhost:3000/pedido/6407c0ac5701b2ee04e19a32
 ###
 get http://localhost:3000/peso/63fe8adc6f55159ba877ab1590
 ###
