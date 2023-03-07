@@ -43,8 +43,18 @@
                             }
                         },
                         (decodedText, decodedResult) => {
-                            console.log(`Scan result: ${decodedText}`, decodedResult);
-                            document.getElementById("result").value = decodedResult;
+                            //console.log(`Scan result: ${decodedText}`, decodedResult);
+                            //document.getElementById("result").value = decodedResult;
+
+                            //  Verifies the ID of the order exctracted from the QR is valid
+                            fetch('http://127.0.0.1:3000/pedido/' + decodedText)
+                                .then(res => res.json())
+                                .then((res) => {
+                                    console.log(res);
+                                    if(res._id !== undefined) {
+                                        console.log("SIUUUU");
+                                    }
+                                })
                         },
                         (errorMessage) => {
                             console.log("Error reading QR code...");
