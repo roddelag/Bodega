@@ -24,13 +24,14 @@ router.get("/:id", async (req, res) => {
     try {
         const pedido = await Pedido.findById(req.params.id);
         if (!pedido) {
-            res.status(404).json({message: "Pedido no encontrado"});
+            res.status(404).json({ success: false, message: "Pedido no encontrado" });
             return;
         }
-        res.json("TRUE");
+        res.json({ success: true });
     } catch (error) {
-        res.status(500).json("FALSE");
+        res.status(500).json({ success: false });
     }
-})
+});
+
 
 module.exports = router;
