@@ -1,0 +1,85 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Roboto';
+    background-color: dimgray;
+}
+
+.header {
+    width: 85%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 12px 0;
+    border-bottom: 1px solid gray;
+}
+
+.header div {
+    margin: 12px 24px;
+    color: aliceblue;
+}
+
+.header .home-button a {
+    font-weight: bold;
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.header .menu img {
+    width: 25px;
+    color: aliceblue;
+    filter: invert();
+}
+
+.info {
+    width: 85%;
+    height: 400px;
+    margin: 42px auto;
+}
+
+.image {
+    width: 100%;
+    height: 250px;
+}
+
+.image img {
+    width: 100%;
+    overflow: hidden;
+}
+.info {
+    color: aliceblue;
+}
+
+.info .price {
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info div:nth-child(3) {
+    font-size: 16px;
+}
+
+.order-options {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.place-order {
+    color: white;
+    background-color: blue;
+    padding: 12px;
+}
+
+.qr-code {
+    max-width: 250px;
+    margin: 10px;
+}
+
+

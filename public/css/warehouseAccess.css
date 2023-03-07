@@ -1,0 +1,44 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00FF00;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 2%;
+    background-color: #901900;
+}
+
+footer {
+    color: #FFF;
+    background-color: #000;
+    position: absolute;
+    width: 100%;
+    bottom: 0%;
+    align-items: center;
+    text-align: center;
+}
+
+body {
+    background-color: #E32800;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#logo {
+    width: 5%;
+    margin-right: 2%;
+}
+
+#reader {
+    width: 600px;
+}
+
+#result {
+    text-align: center;
+    font-size: 1.5rem;
+}
