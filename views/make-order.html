@@ -39,14 +39,17 @@
         <br />
         <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Ingresa la cantidad" />
         <button class="place-order" type="button" id="qr-btn">Generate</button>
+        <a id="qr-code" href="" download style="display: none"> Descargar QR</a>
+
     </section>
-    <img class="qr-code" />
+    <!-- <img class="qr-code" /> -->
 
 
 
 
     <script>
         var amount = document.querySelector('#qr-txt');
+        var downloadQr = document.querySelector('#qr-code');
         // Function to HTML encode the text
         function htmlEncode(value) {
             return $('<div/>').text(value)
@@ -66,7 +69,29 @@
 
                 // Replace the src of the image with
                 // the QR code image
-                $('.qr-code').attr('src', finalURL);
+                // $('.qr-code').attr('src', finalURL);
+
+                // Sets anchor link to finalURL and displays anchor
+                downloadQr.setAttribute('href', finalURL);
+                downloadQr.style.display = 'inline-block';
+
+
+                fetch('http://127.0.0.1:3000/pedido', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "email": 'prueba@hotmail.com',
+                        "cantidad": amount.value,
+                        "precio": 10,
+                        "peso": 5
+                    }),
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8"
+                    }
+                })
+                    .then(results => results.json())
+                    .then(function (data) {
+                        console.log(data)
+                    });
             });
         });
 

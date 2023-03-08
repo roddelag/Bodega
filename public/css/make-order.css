@@ -86,6 +86,14 @@ body {
     padding: 12px;
 }
 
+.order-options button {
+    margin-bottom: 14px;
+}
+
+.order-options a {
+    color: aliceblue;
+}
+
 .qr-code {
     max-width: 250px;
     margin: 10px;
