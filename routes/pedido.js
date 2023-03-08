@@ -12,9 +12,9 @@ router.post("/", async (req, res) => {
     })
     try {
         const savedPedido = await newPedido.save();
-        res.status(201).json({message: "Pedido creado", pedidoId: savedPedido._id});
+        res.status(201).json({ message: "Pedido creado", pedidoId: savedPedido._id });
     } catch (error) {
-        res.status(400).json({message: error.message});
+        res.status(400).json({ message: error.message });
     }
 })
 

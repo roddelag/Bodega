@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,15 +11,13 @@
     <!-- JQuery import necessary to QR generation -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
+
 <body>
-    <section class="header"> 
+    <section class="header">
         <div class="home-button">
-            <a href="./index.html">
-                < Personalizar pedido
-            </a>
-        </div>
-        <div class="menu">
-            <img src="./assets/icons/menu.png" alt="">
+            <a href="./home">
+                < Personalizar pedido </a> </div> <div class="menu">
+                    <img src="./assets/icons/menu.png" alt="">
         </div>
     </section>
 
@@ -36,22 +35,24 @@
     </section>
 
     <section class="order-options">
-        <a class="place-order"> Ordena ahora</a>
+        <!-- Image where the QR code will be displayed -->
+        <br />
+        <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Ingresa la cantidad" />
+        <button class="place-order" type="button" id="qr-btn">Generate</button>
     </section>
-
-    <!-- Image where the QR code will be displayed -->
     <img class="qr-code" />
-    <br />
-    <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Enter content" />
-    <button type="button" id="qr-btn">Generate</button>
+
+
+
 
     <script>
+        var amount = document.querySelector('#qr-txt');
         // Function to HTML encode the text
         function htmlEncode(value) {
             return $('<div/>').text(value)
-            .html();
+                .html();
         }
- 
+
         $(function () {
             // Specify an onclick function
             // for the generate button
@@ -59,16 +60,18 @@
                 // Connect to the API that generates the QR, giving it
                 // the text to encode within it
                 let finalURL =
-                        'https://chart.googleapis.com/chart?cht=qr&chl=' +
-                        htmlEncode($('#qr-txt').val()) +
-                        '&chs=160x160&chld=L|0'
- 
+                    'https://chart.googleapis.com/chart?cht=qr&chl=' +
+                    htmlEncode($(amount.value).val()) +
+                    '&chs=160x160&chld=L|0'
+
                 // Replace the src of the image with
                 // the QR code image
                 $('.qr-code').attr('src', finalURL);
             });
         });
+
     </script>
 
 </body>
+
 </html>

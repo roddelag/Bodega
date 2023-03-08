@@ -6,10 +6,10 @@ var mongoose = require('mongoose')
 const path = require("path")
 
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
-db.once('open', ()=> console.log('connected to dataabase'))
+db.once('open', () => console.log('connected to dataabase'))
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,11 +23,15 @@ const pedidoRouter = require("./routes/pedido")
 app.use("/peso", pesoRouter)
 app.use("/pedido", pedidoRouter)
 
-app.get("/access", (req, res)=> {
+app.get("/home", (req, res) => {
+    res.render("index.html");
+})
+
+app.get("/access", (req, res) => {
     res.render("warehouseAccess.html");
 })
-app.get("/order", (req, res)=> {
+app.get("/order", (req, res) => {
     res.render("make-order.html");
 })
 
-app.listen(3000, ()=> console.log('server started'))
+app.listen(3000, () => console.log('server started'))
