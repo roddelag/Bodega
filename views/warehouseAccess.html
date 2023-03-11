@@ -11,18 +11,30 @@
         <script src="https://unpkg.com/html5-qrcode"></script>
     </head>
     <body>
-        <header>
-            <img id="logo" src="./assets/icons/logo.png" />
-            <h1>CORN WAREHOUSE</h1>
-        </header>
+        <div id="background-cover">
+            <header>
+                <img id="logo" src="./assets/icons/logo.png" />
+                <div id="header-title">
+                    <h1>MAIZE DEPOT</h1>
+                    <h3><i>Warehouse and Grainery Co. Ltd.</i></h3>
+                </div>
+            </header>
 
-        <main>
-            <div id="reader"></div>
-        </main>
+            <h2>¡Bienvenido!</h2>
+            <main>
+                <div id="reader"></div>
+            </main>
 
-        <footer>
-            <p>© Copyright - 2023</p>
-        </footer>
+            <div class="popup" id="popup">
+                <img id="popup-img" />
+                <h1 id="popup-h1"></h2>
+                <p>... General Kenobi</p>
+            </div>
+
+            <footer>
+                <p>© Copyright - 2023</p>
+            </footer>
+        </div>
 
         <!--QR code scanner code -->
         <script src="./js/warehouseAccess.js" type="text/javascript"></script>
