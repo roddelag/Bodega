@@ -3,7 +3,15 @@
 
 body {
     font-family: 'Roboto';
-    background-color: dimgray;
+    background-image: url("../assets/background.jpg");
+    width: 100vw;
+    min-height: 100vh;
+}
+
+#background-cover {
+    background-color: #FF000088;
+    width: 100vw;
+    min-height: 100vh;
 }
 
 .header {
@@ -14,6 +22,7 @@ body {
     margin: 0 auto;
     padding: 12px 0;
     border-bottom: 1px solid gray;
+    background-color: #901900;
 }
 
 .header div {
