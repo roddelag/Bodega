@@ -14,6 +14,9 @@ function openPopup(orderStatus, orderDetails) {
         popupImg.src = "./assets/icons/valid-order-icon.png";
         popupH1.innerHTML = "¡Código válido!";
         popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
+
+        // Sends the control signal to open the gates
+        openAccessGate();
     } else {
         popupImg.src = "./assets/icons/invalid-order-icon.png";
         popupH1.innerHTML = "¡Código inválido!";
@@ -70,3 +73,12 @@ Html5Qrcode.getCameras().then(devices => {
 }).catch(err => {
     console.log("Error finding a camera to be used...");
 });
+
+// Function to communicate with the listener server in Python that 
+// will serve as a bridge to communicate with Arduino and control the gate
+function openAccessGate() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://127.0.0.1:5000/listener", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({allowAccess: true}));
+}
