@@ -11,64 +11,42 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
-    <section class="header"> 
-        <div class="home-button">
-            <a href="./index.html">
-                < Personalizar pedido
-            </a>
-        </div>
-        <div class="menu">
-            <img src="./assets/icons/menu.png" alt="">
-        </div>
-    </section>
+    <div id="form-background">
+        <section class="header"> 
+            <div class="home-button">
+                <a href="./index.html">
+                    &lt; Inicio 
+                </a>
+            </div>
+            <div class="menu">
+                <img src="./assets/icons/menu.png" alt="">
+            </div>
+        </section>
 
-    <section class="info">
-        <div class="image">
-            <img src="./assets/maiz.png" alt="">
-        </div>
-        <div class="price">
-            <p> Maíz </p>
-            <p>$5800/Tn</p>
-        </div>
-        <div>
-            <p> Selecciona la cantidad de toneladas. La cantidad mínima es de 2 toneladas.</p>
-        </div>
-    </section>
+        <section class="info">
+            <div class="image">
+                <img src="./assets/maiz.png" alt="">
+            </div>
+            <div class="price">
+                <p> Maíz </p>
+                <p>$5800/Tn</p>
+            </div>
+            <div>
+                <p> Selecciona la cantidad de toneladas. La cantidad mínima es de 2 toneladas.</p>
+            </div>
+        </section>
 
-    <section class="order-options">
-        <a class="place-order"> Ordena ahora</a>
-    </section>
+        <section class="order-options">
+            <button id="submit-btn" class="place-order" onClick="generateQR()"> Ordena ahora</button>
+        </section>
 
-    <!-- Image where the QR code will be displayed -->
-    <img class="qr-code" />
-    <br />
-    <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Enter content" />
-    <button type="button" id="qr-btn">Generate</button>
+        <!-- Image where the QR code will be displayed -->
+        <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Enter content" />
+        <br />
+        <img id="qr-code" />
+    </div>
 
-    <script>
-        // Function to HTML encode the text
-        function htmlEncode(value) {
-            return $('<div/>').text(value)
-            .html();
-        }
- 
-        $(function () {
-            // Specify an onclick function
-            // for the generate button
-            $('#qr-btn').click(function () {
-                // Connect to the API that generates the QR, giving it
-                // the text to encode within it
-                let finalURL =
-                        'https://chart.googleapis.com/chart?cht=qr&chl=' +
-                        htmlEncode($('#qr-txt').val()) +
-                        '&chs=160x160&chld=L|0'
- 
-                // Replace the src of the image with
-                // the QR code image
-                $('.qr-code').attr('src', finalURL);
-            });
-        });
-    </script>
+    <script src="./js/make-order.js"></script>
 
 </body>
 </html>
