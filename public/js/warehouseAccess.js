@@ -1,24 +1,27 @@
 let popup = document.getElementById("popup");
 let popupImg = document.getElementById("popup-img");
 let popupH1 = document.getElementById("popup-h1");
+let popupDesc = document.getElementById("popup-desc");
 
 var scanAllowed = true;
 
 // Function to display the popup with the directions of where to go
-function openPopup(orderStatus) {
+function openPopup(orderStatus, orderDetails) {
     scanAllowed = false;
 
     // Adds the styling to the popup depending if the order is valid or not
     if(orderStatus == "VALID") {
         popupImg.src = "./assets/icons/valid-order-icon.png";
-        popupH1.innerHTML = "¡Código valido!"
+        popupH1.innerHTML = "¡Código válido!";
+        popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
     } else {
         popupImg.src = "./assets/icons/invalid-order-icon.png";
-        popupH1.innerHTML = "¡Código inválido!"
+        popupH1.innerHTML = "¡Código inválido!";
+        popupDesc.innerHTML = "Tu código no está asociado con ningún pedido realizado, por favor sigue adelante y libera el camino para los conductores que vienen atrás.<br /><br />En caso de que considere que se trata de un error, discuta el caso con el guardia más adelante.<br /><br/>¡Gracias!";
     }
     
     popup.classList.add("active-popup");
-    setTimeout(closePopup, 5000);
+    setTimeout(closePopup, 10000);
 }
 
 // Function to hide the popup after a certain amount of time
@@ -49,10 +52,10 @@ Html5Qrcode.getCameras().then(devices => {
                     fetch('http://127.0.0.1:3000/pedido/' + decodedText)
                         .then(res => res.json())
                         .then((res) => {
-                            if(res.success) {
-                                openPopup("VALID");
+                            if(res._id != undefined) {
+                                openPopup("VALID", res);
                             } else {
-                                openPopup("INVALID");
+                                openPopup("INVALID", res);
                             }
                         });
                 }
