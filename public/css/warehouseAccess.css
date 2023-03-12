@@ -19,6 +19,7 @@ footer {
     bottom: 0%;
     align-items: center;
     text-align: center;
+    font-size: 2rem;
 }
 
 body {
@@ -31,34 +32,40 @@ body {
     position: fixed;
     background-repeat: no-repeat;
     background-size: cover;
+    font-size: 4rem;
+}
+
+section {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
 }
 
 #logo {
-    width: 10vw;
+    width: 20vw;
     margin-right: 2%;
 }
 
 #reader {
-    width: 50vw;
+    width: 75vw;
 }
 
 #header-title {
     text-align: left;
+    font-size: 2rem;
 }
 
 #header-title h1 {
     color: #F1CD04;
+    font-size: 7.5rem;
+    margin-bottom: -5%;
 }
 
 #background-cover {
     background-color: #FF000088;
     width: 100vw;
     min-height: 100vh;
-}
-
-#result {
-    text-align: center;
-    font-size: 1.5rem;
 }
 
 .popup {
@@ -74,13 +81,14 @@ body {
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
     box-shadow: 0 20px 50px #000;
+    font-size: 3rem;
 }
 
 #popup img {
-    width: 20%;
-    margin-top: -10%; 
+    width: 25vw;
+    margin-top: -15%; 
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px #000;
 }
 
 .active-popup {

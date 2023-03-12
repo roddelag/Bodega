@@ -19,8 +19,8 @@ router.post("/", async (req, res) => {
 })
 
 
-// GET endpoint to retrieve a Pedido by ID
-router.get("/:id", async (req, res) => {
+// GET endpoint to validate if a Pedido exists
+/*router.get("/:id", async (req, res) => {
     try {
         const pedido = await Pedido.findById(req.params.id);
         if (!pedido) {
@@ -30,8 +30,21 @@ router.get("/:id", async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ success: false });
+    } 
+});*/
+
+// GET endpoint to retrieve a Pedido by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const pedido = await Pedido.findById(req.params.id);
+        if (!pedido) {
+            res.status(404).json({message: "Pedido no encontrado"});
+            return;
+        }
+        res.json(pedido);
+    } catch (error) {
+        res.status(500).json({message: error.message});
     }
 });
-
 
 module.exports = router;
