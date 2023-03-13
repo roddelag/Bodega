@@ -5,6 +5,7 @@ var Pedidoschema = mongoose.Schema({
     cantidad: { type: String, required: true },
     precio: { type: Number, required: true },
     peso: { type: Number, required: true },
+    zone: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('Pedido', Pedidoschema);

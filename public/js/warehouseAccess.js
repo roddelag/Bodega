@@ -30,6 +30,11 @@ function openPopup(orderStatus, orderDetails) {
                 let zoneAssigned = (zonesWaitList.indexOf(Math.min(...zonesWaitList))+1).toString();
                 popupRouteImg.src = "./assets/cargo" + zoneAssigned + ".png";
 
+                // Adds the zone number to the order's data
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://127.0.0.1:3000/pedido/assignZone", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({zoneNum: parseInt(zoneAssigned), orderID: orderDetails._id}));
                 // Adds the ID of the order to the waiting list of its assigned zone
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "http://127.0.0.1:3000/zone/pushOrder", true);
@@ -38,7 +43,7 @@ function openPopup(orderStatus, orderDetails) {
                 
                 // Sends the control signal to open the gates
                 // This communicates with the listener server in Python that 
-                // will serve as a bridge between Arduino and this Web Application
+                // will serve as a bridge between Arduino and this Web App
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "http://127.0.0.1:5000/listener", true);
                 xhr.setRequestHeader('Content-Type', 'application/json');

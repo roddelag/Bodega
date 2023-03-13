@@ -18,6 +18,24 @@ router.post("/", async (req, res) => {
     }
 });
 
+// POST endpoint to update the zone of the Pedido
+router.post("/assignZone", async (req, res) => {
+    try {
+        const pedido = await Pedido.findByIdAndUpdate(
+            req.body.orderID, // Finds by ID 
+            { zone: req.body.zoneNum }, // Once found, add to zone 
+            { new: true }); // Options object to return the updated document
+        // Verifies the find worked
+        if(!pedido) {
+            res.status(404).json({message: "Pedido no encontrado"});
+            return;
+        }
+        res.json(pedido);
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
+});
+
 // GET endpoint to retrieve a Pedido by ID
 router.get("/:id", async (req, res) => {
     try {

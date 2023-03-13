@@ -32,6 +32,9 @@ app.get("/home", (req, res) => {
 app.get("/access", (req, res) => {
     res.render("warehouseAccess.html");
 })
+app.get("/exit", (req, res) => {
+    res.render("warehouseOutro.html");
+})
 app.get("/order", (req, res) => {
     res.render("make-order.html");
 })
