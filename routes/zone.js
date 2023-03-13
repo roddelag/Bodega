@@ -6,10 +6,10 @@ const cargoZone = require("../models/zone")
 router.post("/pushOrder", async (req, res) => {
     try {
         const zoneUpdate = await cargoZone.findOneAndUpdate(
-          { name: "zone" + req.body.zoneNum }, // criteria to find the queue
-          { $push: { waiting: req.body.orderID } }, // add the new item to the end of the 'items' array
-          { new: true } // options object to return the updated document
-        );
+            { name: "zone" + req.body.zoneNum }, // Finds by name
+            { $push: { waiting: req.body.orderID } }, // Once found, add to queue
+            { new: true }); // Options object to return the updated document
+        // Verifies the find worked
         if(!zoneUpdate) {
             res.status(404).json({message: "Esa zona de carga no existe..."});
             return;
@@ -24,10 +24,10 @@ router.post("/pushOrder", async (req, res) => {
 router.post("/popOrder", async (req, res) => {
     try {
         const zoneUpdate = await cargoZone.findOneAndUpdate(
-          { name: "zone" + req.body.zoneNum }, // criteria to find the queue
-          { $pop: { waiting: -1 } }, // add the new item to the end of the 'items' array
-          { new: true } // options object to return the updated document
-        );
+            { name: "zone" + req.body.zoneNum }, // Finds by name
+            { $pop: { waiting: -1 } }, // Once found, remove from queue
+            { new: true }); // Options object to return the updated document
+        // Verifies the find worked
         if(!zoneUpdate) {
             res.status(404).json({message: "Esa zona de carga no existe..."});
             return;
@@ -36,6 +36,22 @@ router.post("/popOrder", async (req, res) => {
     } catch(error) {
         res.status(500).json({message: error.message});
     }
+});
+
+// GET endpoint to get the number of waiting trucks on each cargo zone
+router.get("/waitingLists", async (req,res) => {
+    cargoZone.aggregate([{
+        $project: {
+            waitingTrucks: { $size: '$waiting' }
+        }
+    }])
+    .exec((err, result) => {
+        if (err) {
+            res.status(500).json({message: err.message});
+        } else {
+            res.json(result);
+        }
+    });
 });
 
 // GET endpoint to retrieve a zone by name 
