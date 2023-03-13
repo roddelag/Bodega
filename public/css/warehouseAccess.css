@@ -84,11 +84,15 @@ section {
     font-size: 3rem;
 }
 
-#popup img {
+#popup-status-img {
     width: 25vw;
     margin-top: -15%; 
     border-radius: 50%;
     box-shadow: 0 10px 25px #000;
+}
+
+#popup-route-img {
+    width: 30vw;
 }
 
 .active-popup {

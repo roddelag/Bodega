@@ -1,7 +1,8 @@
 let popup = document.getElementById("popup");
-let popupImg = document.getElementById("popup-img");
+let popupStatusImg = document.getElementById("popup-status-img");
 let popupH1 = document.getElementById("popup-h1");
 let popupDesc = document.getElementById("popup-desc");
+let popupRouteImg = document.getElementById("popup-route-img");
 
 var scanAllowed = true;
 
@@ -11,16 +12,18 @@ function openPopup(orderStatus, orderDetails) {
 
     // Adds the styling to the popup depending if the order is valid or not
     if(orderStatus == "VALID") {
-        popupImg.src = "./assets/icons/valid-order-icon.png";
+        popupStatusImg.src = "./assets/icons/valid-order-icon.png";
         popupH1.innerHTML = "¡Código válido!";
         popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
+        popupRouteImg.src = "./assets/cargo" + (Math.floor(Math.random()*4)+1).toString() + ".png";
 
         // Sends the control signal to open the gates
         openAccessGate();
     } else {
-        popupImg.src = "./assets/icons/invalid-order-icon.png";
+        popupStatusImg.src = "./assets/icons/invalid-order-icon.png";
         popupH1.innerHTML = "¡Código inválido!";
         popupDesc.innerHTML = "Tu código no está asociado con ningún pedido realizado, por favor sigue adelante y libera el camino para los conductores que vienen atrás.<br /><br />En caso de que considere que se trata de un error, discuta el caso con el guardia más adelante.<br /><br/>¡Gracias!";
+        popupRouteImg.src = "";
     }
     
     popup.classList.add("active-popup");
