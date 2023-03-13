@@ -15,11 +15,18 @@ function openPopup(orderStatus, orderDetails) {
         popupH1.innerHTML = "¡Código válido!";
         popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "-CARGA EXITOSA-";
 
-        // Remove the truck from the waiting queue of its cargo zone
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://127.0.0.1:3000/zone/popOrder", true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({zoneNum: orderDetails.zone}));
+        if(orderDetails.stats != "DELIVERED") {
+            // Remove the truck from the waiting queue of its cargo zone
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:3000/zone/popOrder", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({zoneNum: parseInt(orderDetails.stats[orderDetails.stats.length - 1])}));
+            // Updates the status of the order to mark it as resolved
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:3000/pedido/setStatus", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({orderStats: "DELIVERED", orderID: orderDetails._id}));
+        } 
 
     } else {
         popupStatusImg.src = "./assets/icons/invalid-order-icon.png";

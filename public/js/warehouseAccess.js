@@ -12,43 +12,55 @@ function openPopup(orderStatus, orderDetails) {
 
     // Adds the styling to the popup depending if the order is valid or not
     if(orderStatus == "VALID") {
-        popupStatusImg.src = "./assets/icons/valid-order-icon.png";
-        popupH1.innerHTML = "¡Código válido!";
-        popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
+        if(orderDetails.stats == "PENDING") {
+            popupStatusImg.src = "./assets/icons/valid-order-icon.png";
+            popupH1.innerHTML = "¡Código válido!";
+            popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
 
-        // Determine on which cargo zone the truck will be assigned
-        fetch("http://127.0.0.1:3000/zone/waitingLists")
-            .then(res => res.json())
-            .then((res) => {
-                zonesWaitList = [
-                    res[0].waitingTrucks,
-                    res[1].waitingTrucks,
-                    res[2].waitingTrucks,
-                    res[3].waitingTrucks
-                ];
-                // Sends the truck to the cargo zone a smaller waiting list
-                let zoneAssigned = (zonesWaitList.indexOf(Math.min(...zonesWaitList))+1).toString();
-                popupRouteImg.src = "./assets/cargo" + zoneAssigned + ".png";
+            // Determine on which cargo zone the truck will be assigned
+            fetch("http://127.0.0.1:3000/zone/waitingLists")
+                .then(res => res.json())
+                .then((res) => {
+                    zonesWaitList = [
+                        res[0].waitingTrucks,
+                        res[1].waitingTrucks,
+                        res[2].waitingTrucks,
+                        res[3].waitingTrucks
+                    ];
+                    // Sends the truck to the cargo zone a smaller waiting list
+                    let zoneAssigned = (zonesWaitList.indexOf(Math.min(...zonesWaitList))+1).toString();
+                    popupRouteImg.src = "./assets/cargo" + zoneAssigned + ".png";
 
-                // Adds the zone number to the order's data
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://127.0.0.1:3000/pedido/assignZone", true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify({zoneNum: parseInt(zoneAssigned), orderID: orderDetails._id}));
-                // Adds the ID of the order to the waiting list of its assigned zone
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://127.0.0.1:3000/zone/pushOrder", true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify({zoneNum: zoneAssigned, orderID: orderDetails._id}));
-                
-                // Sends the control signal to open the gates
-                // This communicates with the listener server in Python that 
-                // will serve as a bridge between Arduino and this Web App
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://127.0.0.1:5000/listener", true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify({allowAccess: true}));
-            })
+                    // Updates the status of the order with the cargo zone
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://127.0.0.1:3000/pedido/setStatus", true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({orderStats: "LOADING_ON_"+zoneAssigned, orderID: orderDetails._id}));
+                    // Adds the ID of the order to the waiting list of its assigned zone
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://127.0.0.1:3000/zone/pushOrder", true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({zoneNum: zoneAssigned, orderID: orderDetails._id}));
+                    
+                    // Sends the control signal to open the gates
+                    // This communicates with the listener server in Python that 
+                    // will serve as a bridge between Arduino and this Web App
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://127.0.0.1:5000/listener", true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({allowAccess: true}));
+                })
+        } else if(orderDetails.stats == "DELIVERED") {
+            popupStatusImg.src = "./assets/icons/invalid-order-icon.png";
+            popupH1.innerHTML = "¡Código inválido!";
+            popupDesc.innerHTML = "Tu código está asociado con una orden que <u><b>YA FUE ENTREGADA</b></u>.<br /><br />Verifique nuevamente, o en caso de que considere que se trata de un error, discuta el caso con el guardia más adelante para despejar la entrada.<br /><br/>¡Gracias!";
+            popupRouteImg.src = "";
+        } else {
+            popupStatusImg.src = "./assets/icons/warning-order-icon.png";
+            popupH1.innerHTML = "¡Código válido!";
+            popupDesc.innerHTML = "<u><b>- Código previamente escaneado -</b></u><br />Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
+            popupRouteImg.src = "./assets/cargo" + orderDetails.stats[orderDetails.stats.length - 1] + ".png";
+        }
 
     } else {
         popupStatusImg.src = "./assets/icons/invalid-order-icon.png";

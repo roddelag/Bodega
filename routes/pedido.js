@@ -18,12 +18,12 @@ router.post("/", async (req, res) => {
     }
 });
 
-// POST endpoint to update the zone of the Pedido
-router.post("/assignZone", async (req, res) => {
+// POST endpoint to update the status of the Pedido
+router.post("/setStatus", async (req, res) => {
     try {
         const pedido = await Pedido.findByIdAndUpdate(
             req.body.orderID, // Finds by ID 
-            { zone: req.body.zoneNum }, // Once found, add to zone 
+            { stats: req.body.orderStats }, // Once found, add the status 
             { new: true }); // Options object to return the updated document
         // Verifies the find worked
         if(!pedido) {
