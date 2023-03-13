@@ -11,6 +11,20 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('connected to dataabase'))
 
+// Since the number of cargo zones never changes, then
+// we can just fill them by default
+const cargoZone = require('./models/zone')
+for(i = 0; i < 4; i++) {
+    const zone = new cargoZone({name: "cargo"+(i+1)});
+    zone.save()
+        .then(savedZone => {
+            console.log("Successfully created: " + zone);
+        })
+        .catch(error => {
+            console.log("Error autofilling the cargo zones...")
+        });
+}
+
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 

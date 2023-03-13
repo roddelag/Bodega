@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Pedido = require('../models/pedido')
 
-
+// POST endpoint to create a new Pedido
 router.post("/", async (req, res) => {
     const newPedido = new Pedido({
         email: req.body.email,
@@ -16,22 +16,7 @@ router.post("/", async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-})
-
-
-// GET endpoint to validate if a Pedido exists
-/*router.get("/:id", async (req, res) => {
-    try {
-        const pedido = await Pedido.findById(req.params.id);
-        if (!pedido) {
-            res.status(404).json({ success: false, message: "Pedido no encontrado" });
-            return;
-        }
-        res.json({ success: true });
-    } catch (error) {
-        res.status(500).json({ success: false });
-    } 
-});*/
+});
 
 // GET endpoint to retrieve a Pedido by ID
 router.get("/:id", async (req, res) => {
