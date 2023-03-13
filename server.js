@@ -15,7 +15,7 @@ db.once('open', () => console.log('connected to dataabase'))
 // we can just fill them by default
 const cargoZone = require('./models/zone')
 for(i = 0; i < 4; i++) {
-    const zone = new cargoZone({name: "cargo"+(i+1)});
+    const zone = new cargoZone({name: "zone"+(i+1)});
     zone.save()
         .then(savedZone => {
             console.log("Successfully created: " + zone);
@@ -33,9 +33,11 @@ app.set('view engine', 'ejs');
 
 const pesoRouter = require("./routes/peso")
 const pedidoRouter = require("./routes/pedido")
+const zoneRouter = require("./routes/zone")
 
 app.use("/peso", pesoRouter)
 app.use("/pedido", pedidoRouter)
+app.use("/zone", zoneRouter)
 
 app.get("/home", (req, res) => {
     res.render("index.html");
