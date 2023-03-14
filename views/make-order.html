@@ -34,19 +34,24 @@
                 <p>$5800/Tn</p>
             </div>
             <div>
-                <p> Selecciona la cantidad de toneladas. La cantidad mínima es de 2 toneladas.</p>
+                <p> Selecciona la cantidad de costales. La cantidad mínima es de 2 costales.</p>
             </div>
         </section>
 
         <section class="order-options">
+            <label for="email">Email</label>
+            <input type="text" id="email" placeholder="ejemplo@hotmail.com">
+
+            <label for="qr-txt">Cantidad</label>
+            <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Cantidad de costales" />
+            <br />
             <button id="submit-btn" class="place-order" onClick="generateQR()"> Ordena ahora</button>
+            <a id="qr-code" href="" download style="display: none"> Descargar QR</a>
+            <img id="qr-code" />
         </section>
 
         <!-- Image where the QR code will be displayed -->
-        <input type="text" size="60" maxlength="60" id="qr-txt" placeholder="Enter content" />
-        <br />
-        <a id="qr-code" href="" download style="display: none"> Descargar QR</a>
-        <img id="qr-code" />
+
     </div>
 
     <script src="./js/make-order.js"></script>

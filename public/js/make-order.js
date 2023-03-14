@@ -3,6 +3,8 @@ function generateQR() {
     // the text to encode within it
     var downloadQr = document.querySelector('#qr-code');
     var amount = document.querySelector('#qr-txt');
+    var email = document.querySelector('#email');
+
     let finalURL =
         'https://chart.googleapis.com/chart?cht=qr&chl=' +
         document.getElementById("qr-txt").value +
@@ -17,11 +19,9 @@ function generateQR() {
     fetch('http://127.0.0.1:3000/pedido', {
         method: 'POST',
         body: JSON.stringify({
-            "email": 'prueba@hotmail.com',
+            "email": email,
             "cantidad": amount.value,
-            "precio": amount.value * 10,
-            "peso": 5,
-            "stats": "PENDING"
+            "precio": amount.value * 300
         }),
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
