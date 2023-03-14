@@ -11,23 +11,45 @@ function openPopup(orderStatus, orderDetails) {
 
     // Adds the styling to the popup depending if the order is valid or not
     if(orderStatus == "VALID") {
-        popupStatusImg.src = "./assets/icons/valid-order-icon.png";
-        popupH1.innerHTML = "¡Código válido!";
-        popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "-CARGA EXITOSA-";
-
         if(orderDetails.stats != "DELIVERED") {
-            // Remove the truck from the waiting queue of its cargo zone
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://127.0.0.1:3000/zone/popOrder", true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({zoneNum: parseInt(orderDetails.stats[orderDetails.stats.length - 1])}));
-            // Updates the status of the order to mark it as resolved
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://127.0.0.1:3000/pedido/setStatus", true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({orderStats: "DELIVERED", orderID: orderDetails._id}));
+            // Calculates the final weight
+            fetch("http://127.0.0.1:3000/peso/outro/" + orderDetails._id, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                })
+                .then(res => res.json())
+                .then((res) => {
+                    if(res.weightValidation == "APPROVED") {
+                        // Remove the truck from the waiting queue of its cargo zone
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "http://127.0.0.1:3000/zone/popOrder", true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(JSON.stringify({zoneNum: parseInt(orderDetails.stats[orderDetails.stats.length - 1])}));
+                        // Updates the status of the order to mark it as resolved
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "http://127.0.0.1:3000/pedido/setStatus", true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(JSON.stringify({orderStats: "DELIVERED", orderID: orderDetails._id}));
+                        // Display the corresponding popup
+                        popupStatusImg.src = "./assets/icons/valid-order-icon.png";
+                        popupH1.innerHTML = "¡Carga Exitosa!";
+                        popupDesc.innerHTML = "Tu orden ha sido resuelta:<br />" + orderDetails._id + "<br /><br />Gracias por confiar en nuestro servicio, lo esperamos de nuevo.<br /><br />-ORDEN COMPLETA-";
+                    } else {
+                        // Display the corresponding popup
+                        popupStatusImg.src = "./assets/icons/warning-order-icon.png";
+                        popupH1.innerHTML = "¡Diferencia de carga!";
+                        let cargoMsg = res.weightVariation > 0 ? "más" : "menos";
+                        popupDesc.innerHTML = "La báscula ha detectado que llevas " + cargoMsg + " carga de la que deberías, de acuerdo con tu orden:<br />" + orderDetails._id + "<br />⦿ Peso aprox. de tu carga: " + (orderDetails.peso + res.weightVariation) + " kg.<br />⦿ Peso que deberías llevar: " + orderDetails.peso + " kg.<br /><br />" + "Vuelve a tu zona de carga asignada e informa de la situación.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error ocurred when updating weights: ", error);
+                });
+        } else {
+            popupStatusImg.src = "./assets/icons/invalid-order-icon.png";
+            popupH1.innerHTML = "¡Código inválido!";
+            popupDesc.innerHTML = "Tu código está asociado con una orden que <u><b>YA FUE ENTREGADA</b></u>.<br /><br />Verifique nuevamente, o en caso de que considere que se trata de un error, discuta el caso con el guardia más adelante para despejar la entrada.<br /><br/>¡Gracias!";
         } 
-
     } else {
         popupStatusImg.src = "./assets/icons/invalid-order-icon.png";
         popupH1.innerHTML = "¡Código inválido!";
