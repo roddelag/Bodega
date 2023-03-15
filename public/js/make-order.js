@@ -5,21 +5,10 @@ function generateQR() {
     var amount = document.querySelector('#qr-txt');
     var email = document.querySelector('#email');
 
-    let finalURL =
-        'https://chart.googleapis.com/chart?cht=qr&chl=' +
-        document.getElementById("qr-txt").value +
-        '&chs=160x160&chld=L|0'
-
-    // Replace the src of the image with
-    // the QR code image
-    document.getElementById("qr-code").src = finalURL;
-    downloadQr.setAttribute('href', finalURL);
-    downloadQr.style.display = 'inline-block';
-
     fetch('http://127.0.0.1:3000/pedido', {
         method: 'POST',
         body: JSON.stringify({
-            "email": email,
+            "email": email.value,
             "cantidad": amount.value,
             "precio": amount.value * 300
         }),
@@ -28,8 +17,17 @@ function generateQR() {
         }
     })
         .then(results => results.json())
-        .then(function (data) {
-            console.log(data)
+        .then((data) => {
+            let finalURL =
+                'https://chart.googleapis.com/chart?cht=qr&chl=' +
+                data.pedidoId +
+                '&chs=160x160&chld=L|0'
+
+            // Replace the src of the image with
+            // the QR code image
+            document.getElementById("qr-code").src = finalURL;
+            downloadQr.setAttribute('href', finalURL);
+            downloadQr.style.display = 'inline-block';
         });
 
 }

@@ -6,6 +6,7 @@ body {
     background-image: url("../assets/background.jpg");
     width: 100vw;
     min-height: 100vh;
+    color: black;
 }
 
 #background-cover {

@@ -13,9 +13,6 @@ function openPopup(orderStatus, orderDetails) {
     // Adds the styling to the popup depending if the order is valid or not
     if(orderStatus == "VALID") {
         if(orderDetails.stats == "PENDING") {
-            popupStatusImg.src = "./assets/icons/valid-order-icon.png";
-            popupH1.innerHTML = "¡Código válido!";
-            popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
 
             // Determine on which cargo zone the truck will be assigned
             fetch("http://127.0.0.1:3000/zone/waitingLists")
@@ -29,7 +26,10 @@ function openPopup(orderStatus, orderDetails) {
                     ];
                     // Sends the truck to the cargo zone a smaller waiting list
                     let zoneAssigned = (zonesWaitList.indexOf(Math.min(...zonesWaitList))+1).toString();
-                    popupRouteImg.src = "./assets/cargo" + zoneAssigned + ".png";
+                    popupStatusImg.src = "./assets/icons/valid-order-icon.png";
+                    popupH1.innerHTML = "¡Código válido!";
+                    popupDesc.innerHTML = "Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso: " + (orderDetails.cantidad*50) + " kg.<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:<br /><i>ZONA " + zoneAssigned + "</i>";
+                    popupRouteImg.src = "./assets/cargo" + zoneAssigned + ".jpg";
 
                     // Updates the status of the order with the cargo zone
                     var xhr = new XMLHttpRequest();
@@ -58,8 +58,8 @@ function openPopup(orderStatus, orderDetails) {
         } else {
             popupStatusImg.src = "./assets/icons/warning-order-icon.png";
             popupH1.innerHTML = "¡Código válido!";
-            popupDesc.innerHTML = "<u><b>- Código previamente escaneado -</b></u><br />Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso (toneladas): " + orderDetails.peso + "<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:";
-            popupRouteImg.src = "./assets/cargo" + orderDetails.stats[orderDetails.stats.length - 1] + ".png";
+            popupDesc.innerHTML = "<u><b>- Código previamente escaneado -</b></u><br />Orden Número<br />" + orderDetails._id + "<br /><br />Detalles de tu pedido:<br />⦿ Cantidad (costales): " + orderDetails.cantidad + "<br />⦿ Peso: " + (orderDetails.cantidad*50) + " kg.<br /><br />" + "Sigue la ruta indicada para llegar a tu zona de carga asignada:<br /><i>ZONA " + orderDetails.stats[orderDetails.stats.length - 1] + "</i>";
+            popupRouteImg.src = "./assets/cargo" + orderDetails.stats[orderDetails.stats.length - 1] + ".jpg";
 
             // Sends the control signal to open the gates
             openEntrance("OPEN");

@@ -51,7 +51,7 @@ router.post("/outro/:id", async (req, res) => {
         }
 
         // Calculates if the weight difference is acceptable
-        const errorMargin = expectedCargoWeight * 0.05; 
+        const errorMargin = expectedCargoWeight * 0.04; 
         const upperLimit = expectedCargoWeight + errorMargin;
         const lowerLimit = expectedCargoWeight - errorMargin;
         const weightDiff = expectedCargoWeight - addedCargoWeight;

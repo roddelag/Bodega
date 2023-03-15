@@ -34,12 +34,15 @@ function openPopup(orderStatus, orderDetails) {
                         popupStatusImg.src = "./assets/icons/valid-order-icon.png";
                         popupH1.innerHTML = "¡Carga Exitosa!";
                         popupDesc.innerHTML = "Tu orden ha sido resuelta:<br />" + orderDetails._id + "<br /><br />Gracias por confiar en nuestro servicio, lo esperamos de nuevo.<br /><br />-ORDEN COMPLETA-";
+
+                        // Sends the control signal to open the gates
+                        openEntrance("OPEN");
                     } else {
                         // Display the corresponding popup
                         popupStatusImg.src = "./assets/icons/warning-order-icon.png";
                         popupH1.innerHTML = "¡Diferencia de carga!";
                         let cargoMsg = res.weightVariation > 0 ? "más" : "menos";
-                        popupDesc.innerHTML = "La báscula ha detectado que llevas " + cargoMsg + " carga de la que deberías, de acuerdo con tu orden:<br />" + orderDetails._id + "<br />⦿ Peso aprox. de tu carga: " + (orderDetails.peso + res.weightVariation) + " kg.<br />⦿ Peso que deberías llevar: " + orderDetails.peso + " kg.<br /><br />" + "Vuelve a tu zona de carga asignada e informa de la situación.";
+                        popupDesc.innerHTML = "La báscula ha detectado que llevas " + cargoMsg + " carga de la que deberías, de acuerdo con tu orden.<br />" + orderDetails._id + "<br /><br />⦿ Llevas una diferencia de aproximadamente: " + res.weightVariation + " kg.<br /><br />" + "Vuelve a tu zona de carga asignada e informa de la situación.";
                     }
                 })
                 .catch(error => {
@@ -106,4 +109,15 @@ Html5Qrcode.getCameras().then(devices => {
 }).catch(err => {
     console.log("Error finding a camera to be used...");
 });
+
+// Function to communicate with the listener server in Python that 
+// will serve as a bridge between Arduino and this Web App
+function openEntrance(code) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://127.0.0.1:5000/listener", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({eventCode: code}));
+}
+
+
 
